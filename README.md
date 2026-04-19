@@ -1,33 +1,59 @@
 # Python Log Monitoring Tool
 
-A simple Python-based log monitoring tool that analyzes authentication log data, detects repeated failed login attempts, and flags suspicious IP addresses using threshold-based logic.
+A Python-based log monitoring tool designed to analyze authentication logs and detect suspicious login activity, including brute-force attempts and unauthorized access.
+
+## Overview
+
+This project simulates a lightweight intrusion detection system by parsing authentication logs and identifying patterns of malicious behavior using regex-based analysis and threshold-based alerting.
 
 ## Features
-- Parses log entries from `auth.log`
-- Detects:
-  - Failed password attempts
-  - Invalid user login attempts
-- Counts failed attempts by IP address
-- Flags suspicious IPs based on a configurable threshold
-- Writes alerts to `alerts.txt`
+
+* Detects failed password attempts
+* Identifies invalid user login attempts
+* Tracks login activity per IP address
+* Flags suspicious IPs based on configurable thresholds
+* Generates alert reports (`alerts.txt`)
 
 ## Technologies Used
-- Python 3
-- Regular Expressions (`re`)
 
-## Project Files
-- `log_monitor.py` - main Python script
-- `auth.log` - sample authentication log file
-- `alerts.txt` - generated alert output
-- `README.md` - project documentation
+* Python 3
+* Regular Expressions (`re`)
+
+## Project Structure
+
+log-project/
+
+* auth.log        # Sample authentication logs
+* log_monitor.py  # Main script
+* alerts.txt      # Generated alerts
+* README.md       # Documentation
 
 ## How It Works
-The script scans each line in the log file and looks for suspicious authentication activity.  
-If an IP address exceeds the defined threshold, it is flagged as suspicious and written to `alerts.txt`.
 
-## Example Log Entries
-```text
-Apr 19 10:12:01 server sshd[123]: Failed password for root from 192.168.1.10 port 22
-Apr 19 10:12:05 server sshd[124]: Failed password for admin from 192.168.1.10 port 22
-Apr 19 10:13:00 server sshd[126]: Failed password for root from 192.168.1.10 port 22
-Apr 19 10:14:00 server sshd[127]: Invalid user hacker from 192.168.1.20 port 22
+The script scans each log entry and extracts IP addresses associated with failed or invalid login attempts.
+It aggregates the number of attempts per IP and flags those exceeding a predefined threshold as suspicious.
+
+## Example Output
+
+Suspicious IPs:
+192.168.1.10 → 3 failed attempts
+
+All Failed Attempts:
+192.168.1.10 → 3 attempts
+192.168.1.20 → 1 attempt
+
+## How to Run
+
+```bash
+python3 log_monitor.py
+```
+
+## Future Improvements
+
+* Real-time log monitoring (tail-based)
+* Support for system logs (`/var/log/auth.log`)
+* Email or alert notifications
+* Visualization/dashboard integration
+* Integration with network scanning tools
+
+
